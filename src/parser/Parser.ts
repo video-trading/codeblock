@@ -1,6 +1,6 @@
-import { CodeBlock } from "./types/CodeBlock";
+import { CodeBlock } from "../types/CodeBlock";
 
-abstract class Parser<T> {
+export abstract class Parser<T> {
   /**
    * Code
    */
