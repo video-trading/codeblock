@@ -21,7 +21,7 @@ export interface CodeBlock<T> {
    */
   description?: string;
   /**
-   *
+   * Has parsing error
    */
   error: boolean;
   /**

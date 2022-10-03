@@ -4,7 +4,7 @@ export abstract class Parser<T> {
   /**
    * Code
    */
-  protected abstract code: string;
+  protected code!: string;
 
   /**
    * Take user's input
