@@ -17,6 +17,14 @@ export abstract class Parser<T> {
    */
   abstract parse(): CodeBlock<T>[];
 
+  /**
+   *
+   * @param start Start index
+   * @param end  End index
+   * @param what  What to replace
+   * @param original  Original string
+   * @returns
+   */
   private replaceBetween(
     start: number,
     end: number,
@@ -26,6 +34,11 @@ export abstract class Parser<T> {
     return original.substring(0, start) + what + original.substring(end);
   }
 
+  /**
+   * Generate code using existing code blocs
+   * @param blocks List of code blocks
+   * @returns
+   */
   generate(blocks: CodeBlock<T>[]): string {
     let lines = this.code.split("\n");
     for (const block of blocks) {
