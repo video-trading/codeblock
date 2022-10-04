@@ -97,6 +97,10 @@ export class SolidityParser extends Parser<SolidityType> {
     let type: string | undefined;
     let value: any | undefined;
     let name: string | undefined;
+    let valueStartColumn: number | undefined;
+    let valueEndColumn: number | undefined;
+    let valueStartLine: number | undefined;
+    let valueEndLine: number | undefined;
 
     for (const child of children) {
       if (child.type === "type_name") {
@@ -116,6 +120,10 @@ export class SolidityParser extends Parser<SolidityType> {
         child.type === "false"
       ) {
         value = this.getValueByType(type!, child.text);
+        valueStartColumn = child.startPosition.column;
+        valueEndColumn = child.endPosition.column;
+        valueStartLine = child.startPosition.row;
+        valueEndLine = child.endPosition.row;
         continue;
       }
     }
@@ -129,6 +137,12 @@ export class SolidityParser extends Parser<SolidityType> {
       description: comment,
       error: false,
       codeComment: comment,
+      valuePosition: {
+        valueStartColumn: valueStartColumn!,
+        valueEndColumn: valueEndColumn!,
+        valueStartLine: valueStartLine!,
+        valueEndLine: valueEndLine!,
+      },
     };
 
     return codeBlock;

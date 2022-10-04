@@ -13,6 +13,10 @@ describe("Given a solidity parser", () => {
 
     expect(result[0].type).toBe("int");
     expect(result[0].value).toBe(0);
+    expect(result[0].valuePosition?.valueStartLine).toBe(2);
+    expect(result[0].valuePosition?.valueEndLine).toBe(2);
+    expect(result[0].valuePosition?.valueStartColumn).toBe(20);
+    expect(result[0].valuePosition?.valueEndColumn).toBe(21);
   });
 
   test("Should parse a simple contract", () => {
@@ -162,5 +166,41 @@ describe("Given a solidity parser", () => {
     const result = parser.input(simpleCode).parse();
     expect(result).toHaveLength(1);
     expect(result[0].error).toBe(true);
+  });
+
+  test("Should generate code correctly", () => {
+    const simpleSolidityCode = `
+        //@codeblock
+        int greet = 0;
+    `;
+
+    const parser = new SolidityParser();
+    const result = parser.input(simpleSolidityCode).parse();
+    result[0].value = 1;
+    const generatedResult = parser.generate(result);
+    expect(generatedResult).toBe(`
+        //@codeblock
+        int greet = 1;
+    `);
+  });
+
+  test("Should generate code correctly", () => {
+    const simpleSolidityCode = `
+        //@codeblock
+        int greet =10;
+        //@codeblock
+        int greet2 = 20;
+    `;
+
+    const parser = new SolidityParser();
+    const result = parser.input(simpleSolidityCode).parse();
+    result[0].value = 1;
+    const generatedResult = parser.generate(result);
+    expect(generatedResult).toBe(`
+        //@codeblock
+        int greet =1;
+        //@codeblock
+        int greet2 = 20;
+    `);
   });
 });

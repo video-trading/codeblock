@@ -7,7 +7,7 @@ export interface CodeBlock<T> {
   /**
    * Value holds by the variable.
    */
-  value?: string;
+  value?: any;
   /**
    * Variable name.
    */
@@ -28,4 +28,31 @@ export interface CodeBlock<T> {
    * Code's comment.
    */
   codeComment?: string;
+  /**
+   * Value's position.
+   * @example
+   * const a = 1;
+   * // valueStartColumn = 9
+   * // valueEndColumn = 10
+   * // valueStartLine = 1
+   * // valueEndLine = 1
+   */
+  valuePosition?: {
+    /**
+     * Value's start column.
+     */
+    valueStartColumn: number;
+    /**
+     * Value's end column.
+     */
+    valueEndColumn: number;
+    /**
+     * Value's start line.
+     */
+    valueStartLine: number;
+    /**
+     * Value's end line.
+     */
+    valueEndLine: number;
+  };
 }
