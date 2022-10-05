@@ -3,8 +3,7 @@ import { SolidityType } from "../types/SolidityType";
 import { Parser } from "./Parser";
 //@ts-ignore
 import Solidity from "tree-sitter-solidity";
-import TreeParser, { QueryCapture, SyntaxNode } from "tree-sitter";
-const { Query } = TreeParser;
+import { QueryCapture, SyntaxNode } from "tree-sitter";
 
 export class SolidityParser extends Parser<SolidityType> {
   input(input: string): Parser<SolidityType> {
@@ -13,7 +12,10 @@ export class SolidityParser extends Parser<SolidityType> {
   }
 
   parse(): CodeBlock<SolidityType>[] {
+    const TreeParser = require("tree-sitter");
     const parser = new TreeParser();
+    const { Query } = TreeParser;
+
     parser.setLanguage(Solidity);
     const tree = parser.parse(this.code);
     // construct a query to query every single
